@@ -183,7 +183,7 @@ async function generateWithApi(topic, audience, sellingPoint) {
 }
 
 function wrapText(text, maxChars) {
-  const normalized = String(text || "").replace(/\r/g, "").split("\n");
+  const normalized = stripUnsupportedPdfEmoji(text).replace(/\r/g, "").split("\n");
   const lines = [];
   for (const paragraph of normalized) {
     let current = "";
@@ -203,8 +203,16 @@ function wrapText(text, maxChars) {
   return lines.slice(0, -1);
 }
 
+function stripUnsupportedPdfEmoji(text) {
+  return String(text || "")
+    .replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}]/gu, "")
+    .replace(/\uFE0F/g, "")
+    .replace(/\s{2,}/g, " ")
+    .trim();
+}
+
 function utf16Hex(text) {
-  return Buffer.from(String(text), "utf16le")
+  return Buffer.from(stripUnsupportedPdfEmoji(text), "utf16le")
     .swap16()
     .toString("hex")
     .toUpperCase();
@@ -227,16 +235,16 @@ function buildPdf({ topic, titles, body, hashtags }) {
 
   const titleLines = [
     "小红书爆款笔记生成器",
-    `主题：${topic}`,
+    `主题：${stripUnsupportedPdfEmoji(topic)}`,
     "",
     "爆款标题备选",
-    ...titles.map((title, index) => `${index + 1}. ${title}`),
+    ...titles.map((title, index) => `${index + 1}. ${stripUnsupportedPdfEmoji(title)}`),
     "",
     "正文",
     ...wrapText(body, 30),
     "",
     "话题标签",
-    ...wrapText(hashtags.map((tag) => `#${tag}`).join("  "), 30)
+    ...wrapText(hashtags.map((tag) => `#${stripUnsupportedPdfEmoji(tag)}`).join("  "), 30)
   ];
 
   const content = ["BT", "/F1 20 Tf", "50 790 Td", "24 TL"];
