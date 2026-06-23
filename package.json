@@ -1,0 +1,13 @@
+{
+  "name": "xiaohongshu-note-agent",
+  "version": "1.0.0",
+  "description": "A lightweight Xiaohongshu viral note generator with OpenAI-compatible API support and PDF export.",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

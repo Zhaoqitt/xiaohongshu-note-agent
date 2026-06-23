@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>小红书爆款笔记生成器</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <main class="shell">
+      <section class="workspace">
+        <aside class="control-panel" aria-label="生成设置">
+          <div class="brand-row">
+            <div class="logo-mark" aria-hidden="true">书</div>
+            <div>
+              <h1>小红书爆款笔记生成器</h1>
+              <p>主题进来，标题、正文、标签和 PDF 出去。</p>
+            </div>
+          </div>
+
+          <form id="generatorForm" class="form-stack">
+            <label>
+              <span>笔记主题</span>
+              <input id="topic" name="topic" required maxlength="60" placeholder="例如：咖啡探店">
+            </label>
+
+            <label>
+              <span>目标用户</span>
+              <input id="audience" name="audience" maxlength="60" placeholder="例如：周末想找氛围小店的女生">
+            </label>
+
+            <label>
+              <span>想突出</span>
+              <textarea id="sellingPoint" name="sellingPoint" rows="4" maxlength="180" placeholder="例如：拍照好看、适合聊天、不踩雷点单"></textarea>
+            </label>
+
+            <button class="primary-action" type="submit">
+              <span class="spark">✦</span>
+              生成爆款笔记
+            </button>
+          </form>
+
+          <div class="quick-topics" aria-label="快捷主题">
+            <button type="button" data-topic="咖啡探店">咖啡探店</button>
+            <button type="button" data-topic="夏日通勤穿搭">夏日通勤穿搭</button>
+            <button type="button" data-topic="考研自习室日常">考研自习室日常</button>
+            <button type="button" data-topic="周末城市徒步">周末城市徒步</button>
+          </div>
+        </aside>
+
+        <section class="result-panel" aria-live="polite">
+          <div class="preview-hero">
+            <div class="preview-image" aria-hidden="true">
+              <div class="phone-frame">
+                <div class="phone-bar"></div>
+                <div class="mock-photo"></div>
+                <div class="mock-lines">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+              </div>
+            </div>
+            <div class="result-heading">
+              <p id="statusPill" class="status-pill">等待输入主题</p>
+              <h2 id="resultTitle">生成结果会显示在这里</h2>
+            </div>
+          </div>
+
+          <div id="emptyState" class="empty-state">
+            <p>输入一个主题后，智能体会生成 3-5 个标题备选、200-400 字正文和话题标签，并支持导出结构化 PDF。</p>
+          </div>
+
+          <article id="resultCard" class="note-document hidden">
+            <section>
+              <div class="section-title">爆款标题备选</div>
+              <ol id="titleList" class="title-list"></ol>
+            </section>
+
+            <section>
+              <div class="section-title">正文</div>
+              <p id="bodyText" class="body-text"></p>
+            </section>
+
+            <section>
+              <div class="section-title">话题标签</div>
+              <div id="hashtagList" class="hashtag-list"></div>
+            </section>
+
+            <div class="document-actions">
+              <button id="copyBtn" type="button" class="ghost-action">复制内容</button>
+              <button id="pdfBtn" type="button" class="primary-action">导出 PDF</button>
+            </div>
+          </article>
+        </section>
+      </section>
+    </main>
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>
